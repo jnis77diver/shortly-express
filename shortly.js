@@ -2,6 +2,7 @@ var express = require('express');
 var util = require('./lib/utility');
 var partials = require('express-partials');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 
 var db = require('./app/config');
@@ -25,12 +26,30 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', 
 function(req, res) {
-  res.render('index');
+   console.log("Cookies: ", req.cookies);
+  if(req.cookies === undefined){
+    //res.writeHead(302, {
+    //'Location': '/login' });
+        //res.render('login');
+        //res.location('login');
+        //res.render('login');
+    res.redirect('/login');
+
+    res.end();
+  } else {
+   //TO DO test to make sure token is valid
+   res.render('index');
+  }
 });
 
 app.get('/create', 
 function(req, res) {
   res.render('index');
+});
+
+app.get('/login',
+  function(req, res) {
+    res.render('login');
 });
 
 app.get('/links', 
@@ -87,6 +106,7 @@ function(req, res) {
 /************************************************************/
 
 app.get('/*', function(req, res) {
+  console.log('in app.get');
   new Link({ code: req.params[0] }).fetch().then(function(link) {
     if (!link) {
       res.redirect('/');
