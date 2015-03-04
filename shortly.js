@@ -102,8 +102,7 @@ function(req, res) {
     console.log('Not a valid url: ', uri);
     return res.send(404);
   }
-
-  new Link({ url: uri }).fetch().then(function(found) {
+  new Link({ url: uri , username : username}).fetch().then(function(found) {
     if (found) {
       res.send(200, found.attributes);
     } else {
@@ -112,7 +111,6 @@ function(req, res) {
           console.log('Error reading URL heading: ', err);
           return res.send(404);
         }
-
         var link = new Link({
           url: uri,
           title: title,
@@ -132,6 +130,7 @@ app.post('/signup', function(req, res) {
   var randomNum = Math.ceil(Math.random() * 10000);
   var username = req.body.username;
   var password = req.body.password;
+  req.session.username = username;
   var salt = bcrypt.genSaltSync(10);
   var hash = bcrypt.hashSync(password, salt);
   Users

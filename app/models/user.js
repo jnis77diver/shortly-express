@@ -10,9 +10,9 @@ var User = db.Model.extend({
   //
   //  });
   //}
-  links : function() {
-    return this.hasMany(Links);
-  }
+ //links : function() {
+  //  return this.hasMany(Links);
+  //}
 
 
 });
