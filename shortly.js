@@ -81,10 +81,16 @@ app.get('/links', function(req, res) {
     res.redirect('/login');
     res.end();
   } else {
+
+
+  //Links.reset().fetch().then(function(links) {
+  //  res.send(200, links.models);
+
     Links.reset().query({where: {username: username}}).fetch().then(function(links) {
-    res.send(200, links.models);
-  });
- }
+      //res.render('index');
+      res.send(200, links.models);
+    });
+  }
 });
 
 app.post('/links', 
@@ -113,7 +119,6 @@ function(req, res) {
           base_url: req.headers.origin,
           username: username
         });
-
         link.save().then(function(newLink) {
           Links.add(newLink);
           res.send(200, newLink);

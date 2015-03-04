@@ -138,5 +138,5 @@ form input[type=text], form input[type=password] {
 
 .logout {
     float: right;
-    margin-right: 50px;
+    margin:-10px 50px 0 0;
 }
